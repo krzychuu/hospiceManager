@@ -1,0 +1,7 @@
+parameters:
+#    hospice_site.example.class: Hospice\SiteBundle\Example
+
+services:
+#    hospice_site.example:
+#        class: %hospice_site.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

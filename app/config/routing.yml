@@ -1,0 +1,6 @@
+hospice_site:
+    resource: "@HospiceSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+hospice_user:
+    resource: "@HospiceUserBundle/Resources/config/routing.yml"

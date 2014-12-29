@@ -1,0 +1,34 @@
+volunteer:
+    pattern:  /
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:index" }
+
+volunteer_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:show" }
+
+volunteer_new:
+    pattern:  /new
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:new" }
+
+volunteer_create:
+    pattern:  /create
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:create" }
+    requirements: { _method: post }
+
+volunteer_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:edit" }
+
+volunteer_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:update" }
+    requirements: { _method: post|put }
+
+volunteer_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:delete" }
+    requirements: { _method: post|delete }
+
+volunteerJSON:
+    pattern:   /volunteerJSON/{queryString}
+    defaults: { _controller: "HospiceSiteBundle:Volunteer:getJSONEntities", queryString: "" }

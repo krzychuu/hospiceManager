@@ -1,0 +1,12 @@
+hospice_site_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: HospiceSiteBundle:Default:index }
+
+HospiceSiteBundle_patient:
+    resource: "@HospiceSiteBundle/Resources/config/routing/patient.yml"
+    prefix:   /patient
+
+HospiceSiteBundle_volunteer:
+    resource: "@HospiceSiteBundle/Resources/config/routing/volunteer.yml"
+    prefix:   /volunteer
+

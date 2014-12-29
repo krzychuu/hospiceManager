@@ -1,0 +1,44 @@
+Hospice\SiteBundle\Entity\Volunteer:
+        type: entity
+        table: volunteer
+        id:
+            id:
+                type: integer
+                generator: { strategy: AUTO }
+        fields:
+            pesel:
+                  type: string
+                  length: 11
+                  nullable: false
+            name:
+                  type: string
+                  length: 255
+            lastname:
+                  type: string
+                  length: 255
+            birth_date:  
+                  type: date
+                  nullable: true
+            street:
+                  type: string
+                  length: 100
+            city:
+                  type: string
+                  length: 100
+            mail:
+                  type: string
+                  length: 255
+            phone:
+                  type: string
+                  length: 255
+            type:
+                  type: integer
+        uniqueConstraints:
+            volunteer_idx:
+                columns: [ pesel ]
+        manyToMany:
+            patients:
+                targetEntity: Patient
+                mappedBy: volunteers
+
+

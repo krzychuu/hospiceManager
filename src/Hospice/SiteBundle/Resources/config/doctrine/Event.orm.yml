@@ -1,0 +1,21 @@
+Hospice\SiteBundle\Entity\Event:
+        type: entity
+        table: event
+        id:
+            id:
+                type: integer
+                generator: { strategy: AUTO }
+        fields:
+            type:
+                  type: integer
+            start:
+                  type: date
+                  nullable: true
+            stop:
+                  type: date
+                  nullable: true
+        uniqueConstraints:
+            event_idx:
+                columns: [ id ]
+
+

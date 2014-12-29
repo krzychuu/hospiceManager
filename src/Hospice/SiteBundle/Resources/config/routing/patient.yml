@@ -1,0 +1,35 @@
+patient:
+    pattern:  /
+    defaults: { _controller: "HospiceSiteBundle:Patient:index" }
+
+patient_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "HospiceSiteBundle:Patient:show" }
+
+patient_new:
+    pattern:  /new
+    defaults: { _controller: "HospiceSiteBundle:Patient:new" }
+
+patient_create:
+    pattern:  /create
+    defaults: { _controller: "HospiceSiteBundle:Patient:create" }
+    requirements: { _method: post }
+
+patient_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HospiceSiteBundle:Patient:edit" }
+
+patient_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "HospiceSiteBundle:Patient:update" }
+    requirements: { _method: post|put }
+
+patient_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "HospiceSiteBundle:Patient:delete" }
+    requirements: { _method: post|delete }
+
+patientJSON:
+    pattern:   /patientJSON/{queryString}
+    defaults: { _controller: "HospiceSiteBundle:Patient:getJSONEntities", queryString: "" }
+

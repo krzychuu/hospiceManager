@@ -1,0 +1,124 @@
+{% extends 'HospiceSiteBundle::layout.html.twig' %} {% block javascripts
+%}
+<script type="text/javascript">
+$(document).ready(function() {    
+$.event.special.inputchange = {
+    setup: function() {
+        var self = this, val;
+        $.data(this, 'timer', window.setInterval(function() {
+            val = self.value;
+            if ( $.data( self, 'cache') != val ) {
+                $.data( self, 'cache', val );
+                $( self ).trigger( 'inputchange' );
+            }
+        }, 800));
+    },
+    teardown: function() {
+        window.clearInterval( $.data(this, 'timer') );
+    },
+    add: function() {
+        $.data(this, 'cache', this.value);
+    }
+};
+    function getVolunteers(text) {
+    var url = '{{path('volunteerJSON')}}';
+    if (text !== undefined && text !== '') {
+        url = url + '/' + text;
+    }
+
+    $.getJSON(url, { get_param: text }, function(data) {
+        var tbody = "";
+
+        for (var i = 0; i < data.length; i++) {
+            var element = data[i];
+            var entity = JSON.parse(element);
+            var tr_str = "<tr>" 
+                         + "<td>" + i + "</td>"
+                         + "<td>" + entity.name + "</td>"
+						 + "<td>" + entity.lastname + "</td>"
+                         + "<td>" + entity.city + "</td>"
+                         + "<td>" + entity.street + "</td>"
+                         + "<td>" + entity.phone + "</td>"
+                         + "<td>" + entity.mail + "</td>"
+                         + "<td><ul><li><a href=\"#\">show</a></li>"
+                         + "<li><a href=\"#\">edit</a></li></ul></td>"
+                         + "</tr>";
+            tbody = tbody + tr_str;
+        }
+        $('#volunteer_content').html(tbody);
+    }); 
+    }
+    $('#input_search').on('inputchange', 
+        function() {
+            getVolunteers(this.value);
+        });
+    getVolunteers();
+});
+
+    function submitVolunteer() {
+        $('#hospice_sitebundle_volunteer').submit();
+    }
+</script>
+{% endblock %}
+
+{% block data_holder -%}
+<h1 id="data_holder_title" class="page-header">{% trans %}Volunteers{% endtrans %}</h1>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#volunteerModal">New volunteer</button>
+<div id="data_holder" class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>                  
+                <th>No.</th>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Lastname{% endtrans %}</th>
+                <th>{% trans %}City{% endtrans %}</th>
+                <th>{% trans %}Street{% endtrans %}</th>
+                <th>{% trans %}Phone{% endtrans %}</th>
+                <th>{% trans %}E-Mail{% endtrans %}</th>
+            </tr>
+        </thead>
+    <tbody id="volunteer_content">
+    </tbody></table>
+</div>
+
+{% endblock %}
+
+{% block bodypart -%}
+<div class="modal fade" id="volunteerModal" tabindex="-1" role="dialog" aria-labelledby="volunteerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="volunteerModalLabel">Create new volunteer</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" action="{{path('volunteer_create')}}" method="post" id="hospice_sitebundle_volunteer" name="hospice_sitebundle_volunteer">
+          {{ form_row(form._token) }}
+          <div class="form-group">
+            <label for="hospice_sitebundle_volunteer_lastname" class="required">Lastname:</label>
+            <input type="text" id="hospice_sitebundle_volunteer_lastname" name="hospice_sitebundle_volunteer[lastname]"
+                    class="form-control" required="required" maxlength="255" />
+          </div>
+          <div class="form-group">
+            <label for="hospice_sitebundle_volunteer_address" class="required">Address</label>
+            <input type="text" id="hospice_sitebundle_volunteer_address" name="hospice_sitebundle_volunteer[address]"
+                    class="form-control" required="required" maxlength="100" />
+          </div>
+          <div class="form-group">
+            <label for="hospice_sitebundle_volunteer_age" class="required">Age</label>
+            <input type="number" id="hospice_sitebundle_volunteer_age" name="hospice_sitebundle_volunteer[age]" required="required" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary" onclick="submitVolunteer();">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+

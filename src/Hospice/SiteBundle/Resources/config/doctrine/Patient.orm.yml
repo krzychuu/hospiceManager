@@ -1,0 +1,47 @@
+Hospice\SiteBundle\Entity\Patient:
+        type: entity
+        table: patient
+        id:
+            id:
+                type: integer
+                generator: { strategy: AUTO }
+        fields:
+            pesel:
+                  type: string
+                  length: 11
+            name:
+                  type: string
+                  length: 255
+            lastname:
+                  type: string
+                  length: 255
+            address:
+                  type: string
+                  length: 100
+            age:  
+                  type: integer
+        uniqueConstraints:
+            patient_idx:
+                columns: [ id ]
+        manyToMany:
+            volunteers:
+                targetEntity: Volunteer
+                inversedBy: patients
+                joinTable:
+                    name: volunteer_patient
+                    joinColumns:
+                        volunteer_id:
+                            referencedColumnName: id
+                    inverseJoinColumns:
+                        patient_id:
+                            referencedColumnName: id
+            events:
+                targetEntity: Event
+                joinTable:
+                    name: event_volunteer
+                    joinColumns:
+                        event_id:
+                            referencedColumnName: id
+                    inverseJoinColumns:
+                        volunteer_id:
+                            referencedColumnName: id
