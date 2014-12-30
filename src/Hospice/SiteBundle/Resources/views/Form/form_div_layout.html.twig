@@ -1,0 +1,8 @@
+{% use 'form_div_layout.html.twig' with choice_widget as basechoice_choice_widget %}
+
+{% block choice_widget %}
+{% spaceless %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' chosen-select')|trim}) %}
+    {{ block('basechoice_choice_widget') }}
+{% endspaceless %}
+{% endblock choice_widget %}

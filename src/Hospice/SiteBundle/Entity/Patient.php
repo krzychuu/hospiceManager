@@ -211,7 +211,7 @@ class Patient
     }
     public function __toString()
     {
-        return $this->getName();
+        return $this->getLastname() . " " . $this->getName();
     }
     public function toJSON()
     {
