@@ -1,0 +1,30 @@
+event:
+    pattern:  /
+    defaults: { _controller: "HospiceSiteBundle:Event:index" }
+
+event_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "HospiceSiteBundle:Event:show" }
+
+event_new:
+    pattern:  /new
+    defaults: { _controller: "HospiceSiteBundle:Event:new" }
+
+event_create:
+    pattern:  /create
+    defaults: { _controller: "HospiceSiteBundle:Event:create" }
+    requirements: { _method: post }
+
+event_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HospiceSiteBundle:Event:edit" }
+
+event_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "HospiceSiteBundle:Event:update" }
+    requirements: { _method: post|put }
+
+event_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "HospiceSiteBundle:Event:delete" }
+    requirements: { _method: post|delete }

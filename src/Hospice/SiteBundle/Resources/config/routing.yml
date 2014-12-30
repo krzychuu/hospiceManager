@@ -10,3 +10,6 @@ HospiceSiteBundle_volunteer:
     resource: "@HospiceSiteBundle/Resources/config/routing/volunteer.yml"
     prefix:   /volunteer
 
+HospiceSiteBundle_event:
+    resource: "@HospiceSiteBundle/Resources/config/routing/event.yml"
+    prefix:   /event

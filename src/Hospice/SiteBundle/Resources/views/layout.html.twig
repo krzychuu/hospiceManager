@@ -1,4 +1,3 @@
-{% form_theme form 'HospiceSiteBundle:Form:form_div_layout.html.twig' %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,8 +17,10 @@
     {% block stylesheets %}
     <link href="{{ asset('bundles/hospicesite/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="{{ asset('bundles/hospicesite/css/dashboard.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/hospicesite/css/chosen.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hospicesite/css/dashboard.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/hospicesite/css/chosen.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/hospicesite/css/fullcalendar.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/hospicesite/css/fullcalendar.print.css') }}" rel='stylesheet' media='print'/>
     {% endblock %}
   </head>
 
@@ -55,9 +56,7 @@
           <ul class="nav nav-sidebar">
 			<li><a href="{{ path('patient') }}">{% trans %}Patients{% endtrans %}</a></li>
 			<li><a href="{{ path('volunteer') }}">{% trans %}Volunteers{% endtrans %}</a></li>
-            <!--<li>
-            { { form(upload_form) } }
-            </li>-->
+			<li><a href="{{ path('event') }}">{% trans %}Events{% endtrans %}</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -74,6 +73,9 @@
     <script src="{{ asset('bundles/hospicesite/js/chosen.jquery.min.js') }}"></script>
     <script src="{{ asset('bundles/hospicesite/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bundles/hospicesite/js/docs.min.js') }}"></script>
+    <script src="{{ asset('bundles/hospicesite/js/moment.min.js') }}"></script>
+    <script src="{{ asset('bundles/hospicesite/js/fullcalendar.min.js') }}"></script>
+
     <script type="text/javascript">
     $(document).ready(function() {    
         var config = {

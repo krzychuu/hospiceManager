@@ -1,8 +1,16 @@
-{% use 'form_div_layout.html.twig' with choice_widget as basechoice_choice_widget %}
+{% use 'form_div_layout.html.twig' with choice_widget as base_choice_widget %}
+{% use 'form_div_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
 
 {% block choice_widget %}
 {% spaceless %}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' chosen-select')|trim}) %}
-    {{ block('basechoice_choice_widget') }}
+    {{ block('base_choice_widget') }}
 {% endspaceless %}
 {% endblock choice_widget %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
+    {{ block('base_form_widget_simple') }}
+{% endspaceless %}
+{% endblock form_widget_simple %}
