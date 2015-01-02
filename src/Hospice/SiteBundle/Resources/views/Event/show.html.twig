@@ -1,5 +1,4 @@
 {% extends '::base.html.twig' %}
-
 {% block body -%}
     <h1>Event</h1>
 
@@ -18,8 +17,8 @@
                 <td>{{ entity.start|date('Y-m-d H:i:s') }}</td>
             </tr>
             <tr>
-                <th>Stop</th>
-                <td>{{ entity.stop|date('Y-m-d H:i:s') }}</td>
+                <th>End</th>
+                <td>{{ entity.end|date('Y-m-d H:i:s') }}</td>
             </tr>
         </tbody>
     </table>

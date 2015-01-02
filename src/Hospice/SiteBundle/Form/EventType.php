@@ -16,8 +16,22 @@ class EventType extends AbstractType
     {
         $builder
             ->add('type')
-            ->add('start')
-            ->add('stop')
+            ->add('name')
+            ->add('description')
+            ->add('start', 'datetime', array(
+                  'date_widget' => 'single_text',
+                  'time_widget' => 'single_text',
+                  'format' => 'yyyy-MM-dd',
+                  'attr' => array(
+                                  'class' => $this->getName() . "_start",
+                                  'data-date-format' => 'yy-mm-dd',), ))
+            ->add('end', 'datetime', array(
+                  'date_widget' => 'single_text',
+                  'time_widget' => 'single_text',
+                  'format' => 'yyyy-MM-dd',
+                  'attr' => array(
+                                  'class' => $this->getName() . "end",
+                                  'data-date-format' => 'yy-mm-dd',), ))
         ;
     }
     

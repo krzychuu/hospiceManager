@@ -99,12 +99,14 @@ class VolunteerController extends Controller
     */
     private function createCreateForm(Volunteer $entity)
     {
-        $form = $this->createForm(new VolunteerType(), $entity, array(
+        $volunteerType = new VolunteerType();
+        $form = $this->createForm($volunteerType, $entity, array(
+            'attr' => ['id' => $volunteerType->getName() . "_id"],
             'action' => $this->generateUrl('volunteer_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+//        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }

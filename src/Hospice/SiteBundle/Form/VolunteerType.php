@@ -18,7 +18,9 @@ class VolunteerType extends AbstractType
             ->add('pesel')
             ->add('name')
             ->add('lastname')
-            ->add('birth_date')
+            ->add('birth_date', 'date', array(
+                  'widget' => 'single_text',
+                  'format' => 'yyyy-MM-dd',))
             ->add('street')
             ->add('city')
             ->add('mail')

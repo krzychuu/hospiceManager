@@ -24,9 +24,12 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('HospiceSiteBundle:Event')->findAll();
+        $entity = new Event();
+        $form = $this->createCreateForm($entity);
 
         return $this->render('HospiceSiteBundle:Event:index.html.twig', array(
             'entities' => $entities,
+            'form'   => $form->createView(),
         ));
     }
     /**
@@ -62,12 +65,12 @@ class EventController extends Controller
     */
     private function createCreateForm(Event $entity)
     {
-        $form = $this->createForm(new EventType(), $entity, array(
+        $eventType = new EventType();
+        $form = $this->createForm($eventType, $entity, array(
+            'attr' => ['id' => $eventType->getName() . "_id"],
             'action' => $this->generateUrl('event_create'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }

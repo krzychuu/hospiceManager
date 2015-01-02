@@ -16,11 +16,19 @@
     <!-- Bootstrap core CSS -->
     {% block stylesheets %}
     <link href="{{ asset('bundles/hospicesite/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hospicesite/css/jquery.timepicker.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/hospicesite/css/bootstrap-datepicker.css') }}" rel="stylesheet">
+  <!--  <link href="{{ asset('bundles/hospicesite/css/bootstrap-timepicker.min.css') }}" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
     <link href="{{ asset('bundles/hospicesite/css/dashboard.css') }}" rel="stylesheet"/>
     <link href="{{ asset('bundles/hospicesite/css/chosen.min.css') }}" rel="stylesheet"/>
+  <!--  <link href="{{ asset('bundles/hospicesite/css/datepicker.css') }}" rel="stylesheet"/> -->
     <link href="{{ asset('bundles/hospicesite/css/fullcalendar.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('bundles/hospicesite/css/fullcalendar.print.css') }}" rel='stylesheet' media='print'/>
+
+    <link href="{{ asset('bundles/hospicesite/css/jquery-ui.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/hospicesite/css/jquery-ui.structure.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/hospicesite/css/jquery-ui.theme.min.css') }}" rel="stylesheet"/>
     {% endblock %}
   </head>
 
@@ -70,8 +78,13 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ asset('bundles/hospicesite/js/jquery.min.js') }}"></script>
+    <!-- <script src="{{ asset('bundles/hospicesite/js/jquery-ui.min.js') }}"></script> -->
     <script src="{{ asset('bundles/hospicesite/js/chosen.jquery.min.js') }}"></script>
     <script src="{{ asset('bundles/hospicesite/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/hospicesite/js/jquery.timepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/hospicesite/js/jquery.datepair.js') }}"></script>
+    <script src="{{ asset('bundles/hospicesite/js/datepair.js') }}"></script>
+    <script src="{{ asset('bundles/hospicesite/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('bundles/hospicesite/js/docs.min.js') }}"></script>
     <script src="{{ asset('bundles/hospicesite/js/moment.min.js') }}"></script>
     <script src="{{ asset('bundles/hospicesite/js/fullcalendar.min.js') }}"></script>

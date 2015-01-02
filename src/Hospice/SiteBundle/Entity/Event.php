@@ -87,25 +87,87 @@ class Event
     }
 
     /**
-     * Set stop
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+
+    /**
+     * Set name
      *
-     * @param \DateTime $stop
+     * @param string $name
      * @return Event
      */
-    public function setStop($stop)
+    public function setName($name)
     {
-        $this->stop = $stop;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get stop
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Event
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $end;
+
+
+    /**
+     * Set end
+     *
+     * @param \DateTime $end
+     * @return Event
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    /**
+     * Get end
      *
      * @return \DateTime 
      */
-    public function getStop()
+    public function getEnd()
     {
-        return $this->stop;
+        return $this->end;
     }
 }

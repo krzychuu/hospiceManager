@@ -8,11 +8,19 @@ Hospice\SiteBundle\Entity\Event:
         fields:
             type:
                   type: integer
-            start:
-                  type: date
+            name:
+                  type: string
+                  length: 255
                   nullable: true
-            stop:
-                  type: date
+            description:
+                  type: string
+                  length: 255
+                  nullable: true
+            start:
+                  type: datetime
+                  nullable: true
+            end:
+                  type: datetime
                   nullable: true
         uniqueConstraints:
             event_idx:

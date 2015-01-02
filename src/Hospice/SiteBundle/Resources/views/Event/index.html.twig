@@ -1,10 +1,12 @@
 {% extends 'HospiceSiteBundle::layout.html.twig' %} 
 {% block javascripts
 %}
+<style>
+.hospice_sitebundle_event_start{z-index:1151 !important;}
+</style>
 <script type="text/javascript">
 
 	$(document).ready(function() {
-		
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -15,7 +17,18 @@
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {
-				var title = prompt('Event Title:');
+            $('#eventDatepair .time').timepicker({
+                'showDuration': true,
+                'timeFormat': 'g:i'
+            });
+            $('#eventDatepair .date').datepicker({
+                'format': 'yyyy-mm-dd',
+                'autoclose': true
+            });
+            $('#eventDatepair').datepair();           
+
+                $('#eventModal').modal('show')
+/*				var title = prompt('Event Title:');
 				var eventData;
 				if (title) {
 					eventData = {
@@ -25,7 +38,7 @@
 					};
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 				}
-				$('#calendar').fullCalendar('unselect');
+				$('#calendar').fullCalendar('unselect');*/
 			},
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
@@ -87,13 +100,24 @@
 			]
 		});
 		
+
+
+
+
 	});
 
+function submitEvent() {
+    $('#hospice_sitebundle_event_id').submit();
+}
+
 </script>
+
 {% endblock %}
 
 {% block data_holder -%}
+
 <h1 id="data_holder_title" class="page-header">{% trans %}Events{% endtrans %}</h1>
+
 <div id="data_holder" class="table-responsive">
 	<div id='calendar'></div>
 </div>
@@ -101,6 +125,35 @@
 {% endblock %}
 
 {% block bodypart -%}
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="eventModalLabel">Create new event</h4>
+      </div>
+      <div class="modal-body">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.type) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            <p id="eventDatepair">
+                {{ form_widget(form.start.date, { 'type': 'text', 'attr': {'class': 'date start'} }) }}
+                {{ form_widget(form.start.time, { 'type': 'text', 'attr': {'class': 'time start'} }) }} to
+                {{ form_widget(form.end.time, { 'type': 'text', 'attr': {'class': 'time end'} }) }}
+                {{ form_widget(form.end.date, { 'type': 'text', 'attr': {'class': 'date end'} }) }}
+            </p>
+            {{ form_end(form) }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="submitEvent();">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
 
