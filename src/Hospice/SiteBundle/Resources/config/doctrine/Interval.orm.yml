@@ -1,0 +1,17 @@
+Hospice\SiteBundle\Entity\Interval:
+        type: entity
+        table: interval
+        id:
+            id:
+                type: integer
+                generator: { strategy: AUTO }
+        fields:
+            name:
+                  type: string
+                  length: 50
+                  nullable: false
+        uniqueConstraints:
+            interval_idx:
+                columns: [ id ]
+
+

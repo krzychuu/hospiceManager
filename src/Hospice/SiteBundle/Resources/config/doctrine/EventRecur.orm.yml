@@ -1,0 +1,27 @@
+Hospice\SiteBundle\Entity\EventRecur:
+        type: entity
+        table: event_recur
+        id:
+            id:
+                type: integer
+                generator: { strategy: AUTO }
+        fields:
+            flags:
+                  type: integer
+            end:
+                  type: datetime
+                  nullable: true
+        oneToOne:
+            event:
+                targetEntity: Event
+                inversedBy: recurOptions
+        manyToOne:
+            frequency:
+                targetEntity: Frequency
+            parent:
+                targetEntity: EventRecur
+        uniqueConstraints:
+            event_recur_idx:
+                columns: [ id ]
+
+

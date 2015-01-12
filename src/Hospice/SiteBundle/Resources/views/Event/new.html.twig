@@ -1,9 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Event creation</h1>
+    <h1>Event creation!</h1>
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+    <input name="foo" value="bar" />
+    {{ form_end(form) }}
 
         <ul class="record_actions">
     <li>

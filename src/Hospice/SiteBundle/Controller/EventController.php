@@ -4,8 +4,11 @@ namespace Hospice\SiteBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Hospice\SiteBundle\Entity\Event;
+use Hospice\SiteBundle\Entity\EventRecur;
 use Hospice\SiteBundle\Form\EventType;
 
 /**
@@ -27,31 +30,66 @@ class EventController extends Controller
         $entity = new Event();
         $form = $this->createCreateForm($entity);
 
+        $eventRecur = new EventRecur();
+
         return $this->render('HospiceSiteBundle:Event:index.html.twig', array(
             'entities' => $entities,
             'form'   => $form->createView(),
         ));
     }
     /**
+     * Lists all Event entities.
+     *
+     */
+    public function getEventsAction($start, $repeatingEnd)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $events = $em->getRepository('HospiceSiteBundle:Event')->findAllBetweenStartAndRepeatingEndDate($start, $repeatingEnd);
+     	$response = new JsonResponse();
+    
+    	$jsonArray = array();
+    
+    	foreach ($events as $event) {
+    		$jsonArray[] = $event->toJSON();
+    	}
+    	$response->setData($jsonArray);
+    	$response->setStatusCode(Response::HTTP_OK);
+    	return $response;
+
+    }
+
+    /**
      * Creates a new Event entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new Event();
-        $form = $this->createCreateForm($entity);
+        $event = new Event();
+
+        $form = $this->createCreateForm($event);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $recurOptions = $event->getRecurOptions();
+            $recuOptionsExists = ($recurOptions->getFrequency() != null);
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            if ($recuOptionsExists) {
+                $recurOptions->setEvent($event);
+            } else {
+                $event->setRecurOptions(null);
+            }
+            $em->persist($event);
+            if ($recuOptionsExists) {
+                $em->persist($recurOptions);
+            }
             $em->flush();
 
-            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('event_show', array('id' => $event->getId())));
         }
 
         return $this->render('HospiceSiteBundle:Event:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $event,
             'form'   => $form->createView(),
         ));
     }
@@ -72,6 +110,7 @@ class EventController extends Controller
             'method' => 'POST',
         ));
 
+        $form->add('submit', 'submit', array('label' => 'Create'));
         return $form;
     }
 
@@ -172,6 +211,14 @@ class EventController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $recurOptions = $entity->getRecurOptions();
+            $recuOptionsExists = ($recurOptions->getFrequency() != null);
+            if ($recuOptionsExists) {
+                $recurOptions->setEvent($entity);
+            } else {
+                $entity->setRecurOptions(null);
+            }
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('event_edit', array('id' => $id)));

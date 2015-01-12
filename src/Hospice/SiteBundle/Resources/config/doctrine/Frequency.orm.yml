@@ -1,0 +1,19 @@
+Hospice\SiteBundle\Entity\Frequency:
+        type: entity
+        table: frequency
+        id:
+            id:
+                type: integer
+                generator: { strategy: AUTO }
+        fields:
+            name:
+                  type: string
+                  length: 50
+                  nullable: false
+        uniqueConstraints:
+            frequency_idx:
+                columns: [ id]
+            frequency_name:
+                columns: [ name ]
+
+

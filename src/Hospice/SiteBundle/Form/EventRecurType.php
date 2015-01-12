@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EventType extends AbstractType
+class EventRecurType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,12 +15,11 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type')
-            ->add('name')
-            ->add('description')
-            ->add('start')
+            ->add('flags')
             ->add('end')
-            ->add('recurOptions', new EventRecurType())
+//            ->add('event')
+            ->add('frequency')
+            ->add('parent')
         ;
     }
     
@@ -30,7 +29,7 @@ class EventType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Hospice\SiteBundle\Entity\Event'
+            'data_class' => 'Hospice\SiteBundle\Entity\EventRecur'
         ));
     }
 
@@ -39,6 +38,6 @@ class EventType extends AbstractType
      */
     public function getName()
     {
-        return 'hospice_sitebundle_event';
+        return 'hospice_sitebundle_eventrecur';
     }
 }

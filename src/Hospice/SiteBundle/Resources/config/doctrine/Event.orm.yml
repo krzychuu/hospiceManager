@@ -1,5 +1,6 @@
 Hospice\SiteBundle\Entity\Event:
         type: entity
+        repositoryClass: Hospice\SiteBundle\Entity\EventRepository
         table: event
         id:
             id:
@@ -22,6 +23,10 @@ Hospice\SiteBundle\Entity\Event:
             end:
                   type: datetime
                   nullable: true
+        oneToOne:
+            recurOptions:
+                targetEntity: EventRecur
+                mappedBy: event
         uniqueConstraints:
             event_idx:
                 columns: [ id ]

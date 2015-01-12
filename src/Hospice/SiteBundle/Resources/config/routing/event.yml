@@ -28,3 +28,8 @@ event_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "HospiceSiteBundle:Event:delete" }
     requirements: { _method: post|delete }
+
+get_events:
+    pattern:   /getEvents/{start}/{repeatingEnd}
+    defaults: { _controller: "HospiceSiteBundle:Event:getEvents"}
+

@@ -170,4 +170,51 @@ class Event
     {
         return $this->end;
     }
+    /**
+     * @var \Hospice\SiteBundle\Entity\EventRecur
+     */
+    private $recurOptions;
+
+
+    /**
+     * Set recurOptions
+     *
+     * @param \Hospice\SiteBundle\Entity\EventRecur $recurOptions
+     * @return Event
+     */
+    public function setRecurOptions(\Hospice\SiteBundle\Entity\EventRecur $recurOptions = null)
+    {
+        $this->recurOptions = $recurOptions;
+
+        return $this;
+    }
+
+    /**
+     * Get recurOptions
+     *
+     * @return \Hospice\SiteBundle\Entity\EventRecur 
+     */
+    public function getRecurOptions()
+    {
+        return $this->recurOptions;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+    public function toJSON()
+    {
+    	$json = array();
+    	$json['id'] = $this->getId();
+    	$json['title'] = $this->getName();
+    	$json['description'] = $this->getDescription();
+    	$json['type'] = $this->getType();
+        $dt = $this->getStart();
+        $json['start'] = $dt ? $dt->format("Y-m-d\TH:i:s") : null;
+        $dt = $this->getEnd();
+    	$json['end'] = $dt ? $dt->format("Y-m-d\TH:i:s") : null;
+
+    	return json_encode($json);
+    }
 }
