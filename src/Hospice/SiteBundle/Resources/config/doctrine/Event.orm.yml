@@ -7,8 +7,6 @@ Hospice\SiteBundle\Entity\Event:
                 type: integer
                 generator: { strategy: AUTO }
         fields:
-            type:
-                  type: integer
             name:
                   type: string
                   length: 255
@@ -23,6 +21,17 @@ Hospice\SiteBundle\Entity\Event:
             end:
                   type: datetime
                   nullable: true
+        manyToMany:
+            patients:
+                targetEntity: Patient
+                mappedBy: events
+            volunteers:
+                targetEntity: Volunteer
+                mappedBy: events
+
+        manyToOne:
+            type: 
+                targetEntity: EventCategory
         oneToOne:
             recurOptions:
                 targetEntity: EventRecur

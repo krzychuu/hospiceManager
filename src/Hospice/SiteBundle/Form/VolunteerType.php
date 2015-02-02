@@ -26,7 +26,6 @@ class VolunteerType extends AbstractType
             ->add('mail')
             ->add('phone')
             ->add('type')
-            ->add('patients')
         ;
     }
     

@@ -37,8 +37,13 @@ Hospice\SiteBundle\Entity\Volunteer:
             volunteer_idx:
                 columns: [ pesel ]
         manyToMany:
-            patients:
-                targetEntity: Patient
-                mappedBy: volunteers
-
-
+            events:
+                targetEntity: Event
+                joinTable:
+                    name: event_volunteer
+                    joinColumns:
+                        event_id:
+                            referencedColumnName: id
+                    inverseJoinColumns:
+                        volunteer_id:
+                            referencedColumnName: id

@@ -217,4 +217,88 @@ class Event
 
     	return json_encode($json);
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $patients;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $volunteers;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->patients = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volunteers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add patients
+     *
+     * @param \Hospice\SiteBundle\Entity\Patient $patients
+     * @return Event
+     */
+    public function addPatient(\Hospice\SiteBundle\Entity\Patient $patients)
+    {
+        $this->patients[] = $patients;
+
+        return $this;
+    }
+
+    /**
+     * Remove patients
+     *
+     * @param \Hospice\SiteBundle\Entity\Patient $patients
+     */
+    public function removePatient(\Hospice\SiteBundle\Entity\Patient $patients)
+    {
+        $this->patients->removeElement($patients);
+    }
+
+    /**
+     * Get patients
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPatients()
+    {
+        return $this->patients;
+    }
+
+    /**
+     * Add volunteers
+     *
+     * @param \Hospice\SiteBundle\Entity\Volunteer $volunteers
+     * @return Event
+     */
+    public function addVolunteer(\Hospice\SiteBundle\Entity\Volunteer $volunteers)
+    {
+        $this->volunteers[] = $volunteers;
+
+        return $this;
+    }
+
+    /**
+     * Remove volunteers
+     *
+     * @param \Hospice\SiteBundle\Entity\Volunteer $volunteers
+     */
+    public function removeVolunteer(\Hospice\SiteBundle\Entity\Volunteer $volunteers)
+    {
+        $this->volunteers->removeElement($volunteers);
+    }
+
+    /**
+     * Get volunteers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVolunteers()
+    {
+        return $this->volunteers;
+    }
 }

@@ -6,7 +6,9 @@ Hospice\SiteBundle\Entity\EventRecur:
                 type: integer
                 generator: { strategy: AUTO }
         fields:
-            flags:
+            interval:
+                  type: integer
+            intervalFlags:
                   type: integer
             end:
                   type: datetime

@@ -1,6 +1,6 @@
-Hospice\SiteBundle\Entity\Frequency:
+Hospice\SiteBundle\Entity\EventCategory:
         type: entity
-        table: frequency
+        table: event_category
         id:
             id:
                 type: integer
@@ -10,15 +10,10 @@ Hospice\SiteBundle\Entity\Frequency:
                   type: string
                   length: 50
                   nullable: false
-        oneToMany:
-            intervalOptions:
-                targetEntity: IntervalOption
-                mappedBy: frequency
-
         uniqueConstraints:
-            frequency_idx:
+            event_category_idx:
                 columns: [ id]
-            frequency_name:
+            event_category_name:
                 columns: [ name ]
 
 

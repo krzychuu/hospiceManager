@@ -1,6 +1,6 @@
-Hospice\SiteBundle\Entity\Interval:
+Hospice\SiteBundle\Entity\IntervalOption:
         type: entity
-        table: interval
+        table: interval_option
         id:
             id:
                 type: integer
@@ -10,8 +10,16 @@ Hospice\SiteBundle\Entity\Interval:
                   type: string
                   length: 50
                   nullable: false
+            value:
+                type: integer
+        manyToOne:
+            frequency:
+                targetEntity: Frequency
+
         uniqueConstraints:
-            interval_idx:
+            interval_options_idx:
                 columns: [ id ]
+            interval_options_name:
+                columns: [ name ]
 
 

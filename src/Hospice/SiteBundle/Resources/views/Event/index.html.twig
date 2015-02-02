@@ -1,3 +1,4 @@
+{% form_theme form 'HospiceSiteBundle:Form:form_div_layout.html.twig' %}
 {% extends 'HospiceSiteBundle::layout.html.twig' %} 
 {% block javascripts
 %}
@@ -5,43 +6,77 @@
 .hospice_sitebundle_event_start{z-index:1151 !important;}
 </style>
 <script type="text/javascript">
+    var frequencies = {{ frequencies | raw }}
 
-	$(document).ready(function() {
-		$('#calendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			defaultDate: '2014-11-12',
-			selectable: true,
-			selectHelper: true,
-			select: function(start, end) {
-            $('#eventDatepair .time').timepicker({
-                'showDuration': true,
-                'timeFormat': 'G:i'
-            });
-            $('#eventDatepair .date').datepicker({
-                'format': 'yyyy-mm-dd',
-                'autoclose': true
-            });
-            $('#eventDatepair').datepair();           
+    function checkBoxChange(cb) {
+        var val = parseInt($('#hospice_sitebundle_event_recurOptions_intervalFlags').val());
+        var cbVal = parseInt(cb.value);
+        if (isNaN(val)) val = 0;
+        if(cb.checked) {
+            val |= cbVal;
+        } else {
+            val &= ~cbVal;
+        }
+        $('#hospice_sitebundle_event_recurOptions_intervalFlags').val(val.toString());
+    }
 
-                $('#eventModal').modal('show')
-/*				var title = prompt('Event Title:');
-				var eventData;
-				if (title) {
-					eventData = {
-						title: title,
-						start: start,
-						end: end
-					};
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
-				$('#calendar').fullCalendar('unselect');*/
-			},
-			editable: true,
-			eventLimit: true, // allow "more" link when too many events
+    function selectFrequency() {
+        var id = $('#hospice_sitebundle_event_recurOptions_frequency option:selected').val();
+        $('#intervalOpts').empty();
+        $('#hospice_sitebundle_event_recurOptions_intervalFlags').val("0");
+        for (var i = 0; i < frequencies.length; i++) {
+            if (id == frequencies[i].id.toString()) {
+                var perWeekOptsDiv = $('<div>').attr('id', 'perWeekOpts')
+                $.each(frequencies[i].opts, function(idx, o) {
+                    var label = $('<label>').attr('class', 'checkbox-inline').text(o.name);
+                    label.append($('<input>').attr('type', 'checkbox').attr('value', o.value)
+                            .attr('onchange', 'checkBoxChange(this)'))
+                    perWeekOptsDiv.append(label);
+                });
+                $('#intervalOpts').append(perWeekOptsDiv);
+                break;
+            }
+        };
+    }
+
+    $(document).ready(function() {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function(start, end) {
+                $('#event-modal .time').timepicker({
+                   'showDuration': true,
+                   'timeFormat': 'G:i'
+                });
+                $('#event-modal .date').datepicker({
+                    'format': 'yyyy-mm-dd',
+                    'autoclose': true
+                });
+                $('#eventDatepair').datepair();           
+                $('#event-modal .date.start').datepicker("setDate", start.format());
+                $('#event-modal .date.end').datepicker("setDate", end.format());
+                $('#event-modal .time.start').timepicker("setTime", start.format('HH:mm'));
+                $('#event-modal .time.end').timepicker("setTime", end.format('HH:mm'));
+                $('#eventModal').modal('show');
+/*                var title = prompt('Event Title:');
+                var eventData;
+                if (title) {
+                    eventData = {
+                        title: title,
+                        start: start,
+                        end: end
+                    };
+                    $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                }
+                $('#calendar').fullCalendar('unselect');*/
+            },
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
             events: function(start, end, timezone, callback) {
                     var url = "{{ path('event') }}" + "getEvents/" + start.format() + "/" + end.format();
                     $.getJSON(url,
@@ -52,7 +87,7 @@
                                     var event = JSON.parse(element);
 
                                     events.push({
-                                        title: event.title,
+                                        title: event.title + " " + event.id,
                                         start: event.start,
                                         end: event.end
                                     });
@@ -60,18 +95,19 @@
                                 callback(events);
                             });
                 }
-		});
-		
+        });
+    });
 
 
-
-
-	});
-
-function submitEvent() {
-    $('#hospice_sitebundle_event_id').submit();
-}
-
+    function submitEvent() {
+        $('#hospice_sitebundle_event_id').submit();
+        $('#calendar').fullCalendar('refetchEvents');
+    }
+    function toogleRecurOptions() {
+        //$("#event-modal .button span").toggleClass("glyphicon-chevron-down glyphicon-chevron-up")
+        $("#span1").toggleClass("glyphicon-chevron-down glyphicon-chevron-up")
+        $("#event-recur-options").toggle();
+    }
 </script>
 
 {% endblock %}
@@ -81,7 +117,7 @@ function submitEvent() {
 <h1 id="data_holder_title" class="page-header">{% trans %}Events{% endtrans %}</h1>
 
 <div id="data_holder" class="table-responsive">
-	<div id='calendar'></div>
+    <div id='calendar'></div>
 </div>
 
 {% endblock %}
@@ -95,18 +131,36 @@ function submitEvent() {
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="eventModalLabel">Create new event</h4>
       </div>
-      <div class="modal-body">
+      <div id="event-modal" class="modal-body">
             {{ form_start(form) }}
             {{ form_errors(form) }}
             {{ form_row(form.type) }}
             {{ form_row(form.name) }}
             {{ form_row(form.description) }}
             <p id="eventDatepair">
-                {{ form_widget(form.start.date, { 'type': 'text', 'attr': {'class': 'date start'} }) }}
-                {{ form_widget(form.start.time, { 'type': 'text', 'attr': {'class': 'time start'} }) }} to
-                {{ form_widget(form.end.time, { 'type': 'text', 'attr': {'class': 'time end'} }) }}
-                {{ form_widget(form.end.date, { 'type': 'text', 'attr': {'class': 'date end'} }) }}
+                {{ form_widget(form.start.date, { 'type': 'text', 'attr': {'class': 'date start', 'style': 'display:inline;width:22%'} }) }}
+                {{ form_widget(form.start.time, { 'type': 'text', 'attr': {'class': 'time start', 'style': 'display:inline;width:20%'} }) }} to
+                {{ form_widget(form.end.time, { 'type': 'text', 'attr': {'class': 'time end', 'style': 'display:inline;width:20%'} }) }}
+                {{ form_widget(form.end.date, { 'type': 'text', 'attr': {'class': 'date end', 'style': 'display:inline;width:22%'} }) }}
             </p>
+                {{ form_row(form.volunteers) }}
+                {{ form_row(form.patients) }}
+            <button type="button" class="btn btn-default btn-lg" onclick="toogleRecurOptions();">
+            <span id="span1" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Repeat
+            </button>
+            <div id="event-recur-options" style="display:none">
+                {{ form_row(form.recurOptions.frequency, {'attr': {'onChange': 'selectFrequency()'}} ) }}
+                <div id="intervalOpts">
+                </div>
+                {{ form_row(form.recurOptions.interval) }}
+                <div class="hidden">
+                {{ form_row(form.recurOptions.intervalFlags) }}
+                </div>
+                {{ form_label(form.recurOptions.end) }}
+                {{ form_widget(form.recurOptions.end.date, { 'type': 'text', 'attr': {'class': 'date', 'style': 'display:inline;width:22%'} }) }}
+                {{ form_widget(form.recurOptions.end.time, { 'type': 'text', 'attr': {'class': 'time', 'style': 'display:inline;width:20%'} }) }}
+                {{ form_row(form.recurOptions.parent) }}
+            </div>
             {{ form_end(form) }}
       </div>
       <div class="modal-footer">

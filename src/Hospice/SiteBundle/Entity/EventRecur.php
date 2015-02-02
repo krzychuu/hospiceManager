@@ -17,7 +17,12 @@ class EventRecur
     /**
      * @var integer
      */
-    private $flags;
+    private $interval;
+
+    /**
+     * @var integer
+     */
+    private $intervalFlags;
 
     /**
      * @var \DateTime
@@ -25,9 +30,19 @@ class EventRecur
     private $end;
 
     /**
+     * @var \Hospice\SiteBundle\Entity\Event
+     */
+    private $event;
+
+    /**
      * @var \Hospice\SiteBundle\Entity\Frequency
      */
     private $frequency;
+
+    /**
+     * @var \Hospice\SiteBundle\Entity\EventRecur
+     */
+    private $parent;
 
 
     /**
@@ -41,26 +56,49 @@ class EventRecur
     }
 
     /**
-     * Set flags
+     * Set interval
      *
-     * @param integer $flags
+     * @param integer $interval
      * @return EventRecur
      */
-    public function setFlags($flags)
+    public function setInterval($interval)
     {
-        $this->flags = $flags;
+        $this->interval = $interval;
 
         return $this;
     }
 
     /**
-     * Get flags
+     * Get interval
      *
      * @return integer 
      */
-    public function getFlags()
+    public function getInterval()
     {
-        return $this->flags;
+        return $this->interval;
+    }
+
+    /**
+     * Set intervalFlags
+     *
+     * @param integer $intervalFlags
+     * @return EventRecur
+     */
+    public function setIntervalFlags($intervalFlags)
+    {
+        $this->intervalFlags = $intervalFlags;
+
+        return $this;
+    }
+
+    /**
+     * Get intervalFlags
+     *
+     * @return integer 
+     */
+    public function getIntervalFlags()
+    {
+        return $this->intervalFlags;
     }
 
     /**
@@ -87,6 +125,29 @@ class EventRecur
     }
 
     /**
+     * Set event
+     *
+     * @param \Hospice\SiteBundle\Entity\Event $event
+     * @return EventRecur
+     */
+    public function setEvent(\Hospice\SiteBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Hospice\SiteBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
      * Set frequency
      *
      * @param \Hospice\SiteBundle\Entity\Frequency $frequency
@@ -107,39 +168,6 @@ class EventRecur
     public function getFrequency()
     {
         return $this->frequency;
-    }
-    /**
-     * @var \Hospice\SiteBundle\Entity\Event
-     */
-    private $event_id;
-
-    /**
-     * @var \Hospice\SiteBundle\Entity\EventRecur
-     */
-    private $parent;
-
-
-    /**
-     * Set event_id
-     *
-     * @param \Hospice\SiteBundle\Entity\Event $eventId
-     * @return EventRecur
-     */
-    public function setEventId(\Hospice\SiteBundle\Entity\Event $eventId = null)
-    {
-        $this->event_id = $eventId;
-
-        return $this;
-    }
-
-    /**
-     * Get event_id
-     *
-     * @return \Hospice\SiteBundle\Entity\Event 
-     */
-    public function getEventId()
-    {
-        return $this->event_id;
     }
 
     /**
@@ -164,38 +192,9 @@ class EventRecur
     {
         return $this->parent;
     }
-    /**
-     * @var \Hospice\SiteBundle\Entity\Event
-     */
-    private $event;
-
-
-    /**
-     * Set event
-     *
-     * @param \Hospice\SiteBundle\Entity\Event $event
-     * @return EventRecur
-     */
-    public function setEvent(\Hospice\SiteBundle\Entity\Event $event = null)
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return \Hospice\SiteBundle\Entity\Event 
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-
     public function __toString()
     {
-        return strval($this->getId()) . " oryginalEvent=" . $this->getEvent();
+        return "recurOption";
     }
 
 }

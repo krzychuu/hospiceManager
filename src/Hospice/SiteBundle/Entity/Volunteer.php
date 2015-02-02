@@ -370,4 +370,42 @@ class Volunteer
     {
         return $this->type;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $events;
+
+
+    /**
+     * Add events
+     *
+     * @param \Hospice\SiteBundle\Entity\Event $events
+     * @return Volunteer
+     */
+    public function addEvent(\Hospice\SiteBundle\Entity\Event $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \Hospice\SiteBundle\Entity\Event $events
+     */
+    public function removeEvent(\Hospice\SiteBundle\Entity\Event $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
 }

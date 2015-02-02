@@ -24,24 +24,13 @@ Hospice\SiteBundle\Entity\Patient:
             patient_idx:
                 columns: [ id ]
         manyToMany:
-            volunteers:
-                targetEntity: Volunteer
-                inversedBy: patients
-                joinTable:
-                    name: volunteer_patient
-                    joinColumns:
-                        volunteer_id:
-                            referencedColumnName: id
-                    inverseJoinColumns:
-                        patient_id:
-                            referencedColumnName: id
             events:
                 targetEntity: Event
                 joinTable:
-                    name: event_volunteer
+                    name: event_patient
                     joinColumns:
                         event_id:
                             referencedColumnName: id
                     inverseJoinColumns:
-                        volunteer_id:
+                        patient_id:
                             referencedColumnName: id

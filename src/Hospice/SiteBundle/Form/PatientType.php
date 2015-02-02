@@ -20,7 +20,6 @@ class PatientType extends AbstractType
             ->add('lastname')
             ->add('address')
             ->add('age')
-            ->add('volunteers')
         ;
     }
     

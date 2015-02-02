@@ -18,9 +18,23 @@ class EventType extends AbstractType
             ->add('type')
             ->add('name')
             ->add('description')
-            ->add('start')
-            ->add('end')
-            ->add('recurOptions', new EventRecurType())
+            ->add('start', 'datetime', array(
+                  'date_widget' => 'single_text',
+                  'time_widget' => 'single_text',
+                  'format' => 'yyyy-MM-dd',
+                  'attr' => array(
+                                  'class' => $this->getName() . "_start",
+                                  'data-date-format' => 'yy-mm-dd',), ))
+            ->add('end', 'datetime', array(
+                  'date_widget' => 'single_text',
+                  'time_widget' => 'single_text',
+                  'format' => 'yyyy-MM-dd',
+                  'attr' => array(
+                                  'class' => $this->getName() . "end",
+                                  'data-date-format' => 'yy-mm-dd',), ))
+            ->add('volunteers')
+            ->add('patients')
+			->add('recurOptions', new EventRecurType())
         ;
     }
     

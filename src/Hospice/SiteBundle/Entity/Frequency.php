@@ -57,4 +57,49 @@ class Frequency
     {
         return $this->getName();
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $intervalOptions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->intervalOptions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add intervalOptions
+     *
+     * @param \Hospice\SiteBundle\Entity\IntervalOption $intervalOptions
+     * @return Frequency
+     */
+    public function addIntervalOption(\Hospice\SiteBundle\Entity\IntervalOption $intervalOptions)
+    {
+        $this->intervalOptions[] = $intervalOptions;
+
+        return $this;
+    }
+
+    /**
+     * Remove intervalOptions
+     *
+     * @param \Hospice\SiteBundle\Entity\IntervalOption $intervalOptions
+     */
+    public function removeIntervalOption(\Hospice\SiteBundle\Entity\IntervalOption $intervalOptions)
+    {
+        $this->intervalOptions->removeElement($intervalOptions);
+    }
+
+    /**
+     * Get intervalOptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIntervalOptions()
+    {
+        return $this->intervalOptions;
+    }
 }

@@ -1,5 +1,7 @@
 .settings/
+*.php~
 /web/bundles/
+/app/database.bin
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
